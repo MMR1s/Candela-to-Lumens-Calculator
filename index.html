@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candela to Lumens Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .calculator input,
+        .calculator button {
+            margin: 10px 0;
+            padding: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .calculator button {
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .calculator button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+        <h2>Candela to Lumens Calculator</h2>
+        <input type="number" id="candela" placeholder="Luminous Intensity (cd)" required>
+        <input type="number" id="apexAngle" placeholder="Apex Angle (degrees)" required>
+        <button onclick="convertCandelaToLumens()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertCandelaToLumens() {
+            // Get input values
+            var candela = parseFloat(document.getElementById('candela').value);
+            var apexAngle = parseFloat(document.getElementById('apexAngle').value);
+
+            // Validate inputs
+            if (isNaN(candela) || isNaN(apexAngle) || candela <= 0 || apexAngle <= 0) {
+                document.getElementById('result').innerHTML = "Please enter valid numbers for candela and apex angle.";
+                return;
+            }
+
+            // Convert apex angle from degrees to steradians
+            var apexAngleRadians = (apexAngle * Math.PI) / 180;
+            var solidAngle = 2 * Math.PI * (1 - Math.cos(apexAngleRadians / 2));
+
+            // Calculate lumens
+            var lumens = candela * solidAngle;
+
+            // Display result
+            document.getElementById('result').innerHTML = "Luminous Flux: " + lumens.toFixed(2) + " lm";
+        }
+    </script>
+
+</body>
+
+</html>
